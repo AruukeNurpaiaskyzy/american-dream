@@ -1,0 +1,482 @@
+{% extends 'include/homepage.html' %}
+{% load static %}
+{% block content %}
+
+<body>
+  <div class="hero home container">
+
+    {% include 'include/header.html' %}
+    <h1 class="title">{{settings.title_banner|safe}}</h1>
+    <p class="description">{{settings.description_banner|safe}}</p>
+  </div>
+
+  <section id="about">
+    <div class="container">
+
+      <h2 class="title_h2">{{settings.title_about|safe}}</h2>
+      <div class="about_group">
+        <div class="about_group_top">
+          <div class="about_group_top_left">
+            <div class="about_group_top_left_card">
+              <p class="about_group_top_left_description">
+                {{settings.description_about|safe}}
+              </p>
+
+            </div>
+            <div class="about_group_top_left_cardd">
+              <h3>
+                {{settings.description_about2|safe}}
+              </h3>
+              <p>{{settings.description_about3|safe}}</p>
+            </div>
+          </div>
+          <div style="background-image: url({{ settings.image_about.url }});" class="about_group_top_right">
+            <h4>Интенсивная и разнообразная разговорная практика</h4>
+          </div>
+        </div>
+        <div class="about_group_bottom">
+          <div class="about_group_bottom_left">
+            <img id="B1" src="./img/aboutUs/BECB1HIGHTER.png" alt="vector">
+            <img id="B2" src="./img/aboutUs/BECB2VONTAGE.png" alt="vector">
+            <img id="DUOLINGO" src="./img/aboutUs/DUOLINGO.png" alt="vector">
+            <img id="IELTS" src="./img/aboutUs/IELTS.png" alt="vector">
+            <img id="SAT" src="./img/aboutUs/SAT.png" alt="vector">
+            <img id="V1" src="./img/aboutUs/VEC1.png" alt="vector">
+            <img id="V2" src="./img/aboutUs/VEC2.png" alt="vector">
+            <img id="V3" src="./img/aboutUs/VEC3.png" alt="vector">
+          </div>
+
+          <div class="about_group_bottom_right">
+            <img src="./img/aboutUs/right/rec1.png" alt="vec" id="r_vec1">
+            <img src="./img/aboutUs/right/rec2.png" alt="vec" id="r_vec2">
+            <h2 class="about_group_bottom_right_title">Возможность потгодовится к международному экзамену </h2>
+            <p class="aboutUs__row_cards_right_r_text">В ходе обучения вы сможете не только улучшать владение
+              английским, но и разобраться в структуре и тонкостях живогоносного течения.</p>
+            <p class="aboutUs__row_cards_right_r_text2">Преподаватель поможет вам отработать технику произношения
+              каждого из звуков течения и поделится секретами и лайфхаками.</p>
+          </div>
+        </div>
+
+      </div>
+      <a href="./about.html" class="btn about_btn">Подробнее</a>
+    </div>
+  </section>
+
+
+  <section id="courses">
+    <div class="container">
+      <div class="courses_head">
+
+        <h2 class="title_h2">Популярные курсы</h2>
+        <div class="swiper-navigation">
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+      <div class="swiper courses-slider">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="card">
+              <div class="card_img">
+                <div>
+                  <p>Английские</p>
+                  <h5>Starter (0–3 уровень):</h5>
+                </div>
+                <img src="./img/e404.png" alt="">
+              </div>
+              <ul class="card_list">
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+              </ul>
+              <div class="card_discount">
+                <div class="card_discount_head">
+
+                  <div class="">
+                    <p class="card_discount_title line-through">6000 сом</p>
+                    <p class="card_discount_title">5600 сом</p>
+                  </div>
+
+                  <div class="card_price_minus">-5%</div>
+                </div>
+
+                <div class="card_price">
+                  <h1 class="card_price_n">3,000</h1>
+                  <p class="card_price_som">сом/мес,</p>
+                </div>
+              </div>
+              <div class="card_btn">
+                <button class="detailed">подробнее</button>
+                <button class="signup">Записатся</button>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card">
+              <div class="card_img">
+                <div>
+                  <p>Английские</p>
+                  <h5>Starter (0–3 уровень):</h5>
+                </div>
+                <img src="./img/e404.png" alt="">
+              </div>
+              <ul class="card_list">
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+              </ul>
+              <div class="card_discount">
+                <div class="card_discount_head">
+
+                  <div class="">
+                    <p class="card_discount_title line-through">6000 сом</p>
+                    <p class="card_discount_title">5600 сом</p>
+                  </div>
+
+                  <div class="card_price_minus">-5%</div>
+                </div>
+
+                <div class="card_price">
+                  <h1 class="card_price_n">3,000</h1>
+                  <p class="card_price_som">сом/мес,</p>
+                </div>
+              </div>
+              <div class="card_btn">
+                <button class="detailed">подробнее</button>
+                <button class="signup">Записатся</button>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card">
+              <div class="card_img">
+                <div>
+                  <p>Английские</p>
+                  <h5>Starter (0–3 уровень):</h5>
+                </div>
+                <img src="./img/e404.png" alt="">
+              </div>
+              <ul class="card_list">
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+              </ul>
+              <div class="card_discount">
+                <div class="card_discount_head">
+
+                  <div class="">
+                    <p class="card_discount_title line-through">6000 сом</p>
+                    <p class="card_discount_title">5600 сом</p>
+                  </div>
+
+                  <div class="card_price_minus">-5%</div>
+                </div>
+
+                <div class="card_price">
+                  <h1 class="card_price_n">3,000</h1>
+                  <p class="card_price_som">сом/мес,</p>
+                </div>
+              </div>
+              <div class="card_btn">
+                <button class="detailed">подробнее</button>
+                <button class="signup">Записатся</button>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card">
+              <div class="card_img">
+                <div>
+                  <p>Английские</p>
+                  <h5>Starter (0–3 уровень):</h5>
+                </div>
+                <img src="./img/e404.png" alt="">
+              </div>
+              <ul class="card_list">
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+              </ul>
+              <div class="card_discount">
+                <div class="card_discount_head">
+
+                  <div class="">
+                    <p class="card_discount_title line-through">6000 сом</p>
+                    <p class="card_discount_title">5600 сом</p>
+                  </div>
+
+                  <div class="card_price_minus">-5%</div>
+                </div>
+
+                <div class="card_price">
+                  <h1 class="card_price_n">3,000</h1>
+                  <p class="card_price_som">сом/мес,</p>
+                </div>
+              </div>
+              <div class="card_btn">
+                <button class="detailed">подробнее</button>
+                <button class="signup">Записатся</button>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card">
+              <div class="card_img">
+                <div>
+                  <p>Английские</p>
+                  <h5>Starter (0–3 уровень):</h5>
+                </div>
+                <img src="./img/e404.png" alt="">
+              </div>
+              <ul class="card_list">
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+              </ul>
+              <div class="card_discount">
+                <div class="card_discount_head">
+
+                  <div class="">
+                    <p class="card_discount_title line-through">6000 сом</p>
+                    <p class="card_discount_title">5600 сом</p>
+                  </div>
+
+                  <div class="card_price_minus">-5%</div>
+                </div>
+
+                <div class="card_price">
+                  <h1 class="card_price_n">3,000</h1>
+                  <p class="card_price_som">сом/мес,</p>
+                </div>
+              </div>
+              <div class="card_btn">
+                <button class="detailed">подробнее</button>
+                <button class="signup">Записатся</button>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card">
+              <div class="card_img">
+                <div>
+                  <p>Английские</p>
+                  <h5>Starter (0–3 уровень):</h5>
+                </div>
+                <img src="./img/e404.png" alt="">
+              </div>
+              <ul class="card_list">
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+              </ul>
+              <div class="card_discount">
+                <div class="card_discount_head">
+
+                  <div class="">
+                    <p class="card_discount_title line-through">6000 сом</p>
+                    <p class="card_discount_title">5600 сом</p>
+                  </div>
+
+                  <div class="card_price_minus">-5%</div>
+                </div>
+
+                <div class="card_price">
+                  <h1 class="card_price_n">3,000</h1>
+                  <p class="card_price_som">сом/мес,</p>
+                </div>
+              </div>
+              <div class="card_btn">
+                <button class="detailed">подробнее</button>
+                <button class="signup">Записатся</button>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card">
+              <div class="card_img">
+                <div>
+                  <p>Английские</p>
+                  <h5>Starter (0–3 уровень):</h5>
+                </div>
+                <img src="./img/e404.png" alt="">
+              </div>
+              <ul class="card_list">
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+                <li>Starter (0–3 уровень):</li>
+              </ul>
+              <div class="card_discount">
+                <div class="card_discount_head">
+
+                  <div class="">
+                    <p class="card_discount_title line-through">6000 сом</p>
+                    <p class="card_discount_title">5600 сом</p>
+                  </div>
+
+                  <div class="card_price_minus">-5%</div>
+                </div>
+
+                <div class="card_price">
+                  <h1 class="card_price_n">3,000</h1>
+                  <p class="card_price_som">сом/мес,</p>
+                </div>
+              </div>
+              <div class="card_btn">
+                <button class="detailed">подробнее</button>
+                <button class="signup">Записатся</button>
+              </div>
+            </div>
+          </div>
+          <!-- Добавьте больше слайдов здесь -->
+        </div>
+      </div>
+      <a href="./courses.html" class="btn courses_btn">Все курсы</a>
+    </div>
+  </section>
+  <div class="modal">
+    <div class="container">
+      <div class="modal_content">
+        <button>X</button>
+        <div class="modal_hero">
+          <div>
+
+            <h3>Front-end разработчик кто это и чем занимается?</h3>
+            <p>Front-end разработчик – это специалист, который отвечает за создание пользовательского интерфейса (UI)
+              веб-сайтов и веб-приложений. Он делает так, чтобы сайт выглядел привлекательно, работал быстро и был
+              удобным
+              в
+              использовании.</p>
+          </div>
+          <img src="./img/e404.png" alt="">
+        </div>
+        <div class="modal_info">
+          <h4>Основные технологии Front-end разработки</h4>
+          <p>HTML (HyperText Markup Language)
+            Основной язык разметки, который определяет структуру веб-страницы.Позволяет задавать заголовки, абзацы,
+            изображения, ссылки и другие элементы.</p>
+          <h4>CSS (Cascading Style Sheets)</h4>
+          <p>Отвечает за внешний вид сайта.Позволяет стилизовать элементы (цвета, шрифты, анимации, отступы и т.
+            д.).CSS-фреймворки: Bootstrap, Tailwind CSS.</p>
+          <h4>JavaScript (JS)</h4>
+          <p>Язык программирования, который делает сайт динамичным и интерактивным.Используется для создания анимаций,
+            слайдеров, форм, кнопок, модальных окон.JS-библиотеки и фреймворки: React, Vue.js, Angular.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="modalSign">
+    <div class="modalSign">
+      <div class="container">
+        <button class="modalSign_close">X</button>
+
+        <div class="card">
+          <div class="card_img">
+            <div>
+              <p>Профессия</p>
+              <h5>Beginner (A1-A2)</h5>
+            </div>
+            <img class="" src="./img/e404.png" alt="">
+          </div>
+          <div class="card_discount">
+            <div class="card_discount_head">
+              <div>
+                <p class="card_discount_title line-through">6000 сом</p>
+                <p class="card_discount_title">5600 сом</p>
+              </div>
+              <div class="card_price_minus">-5%</div>
+            </div>
+            <div class="card_price">
+              <h1 class="card_price_n">3,000</h1>
+              <p class="card_price_som">сом/мес</p>
+            </div>
+          </div>
+        </div>
+        <div class="modalSign_form">
+          <input type="text" placeholder="имя">
+          <div>
+            <input type="text" placeholder="телефона">
+            <input type="text" placeholder="Электронная почта">
+          </div>
+          <button class="btn">Отправить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="teachers">
+    <div class="container">
+      <h2 class="title_h2">Наши преподаватели</h2>
+      <div class="teachers">
+        <div class="teachers_menu" id="teachersMenu">
+        </div>
+        <div class="teachers_info" id="teachersInfo">
+        </div>
+      </div>
+    </div> 
+  </section>
+  <!--questions  -->
+  <section id="questions">
+    <div class="container">
+      <div class="questions">
+        <div class="questions_text">
+          <h4>Поможем решить все вопросы</h4>
+          <p>Если вы хотите больше узнать о American dream osh или не знает, какую программу обучение выбрать оставьте
+            заявку - и мы перезвоним </p>
+        </div>
+        <div class="questions_form">
+          <input type="text" placeholder="имя">
+          <div>
+            <input type="text" placeholder="телефона">
+            <input type="text" placeholder="Электронная почта">
+          </div>
+          <button class="btn">Отправить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- contact -->
+  <section id="contact">
+    <div class="container ">
+      <div class="contact">
+        <div class="contact_text">
+          <h2 class="">Контакты</h2>
+          <h3>Номер телефона</h3>
+          <div class="contact_nomer">
+
+            <a href="">{{ contact.phone_numbers|safe }}</a>
+            <h3>Email</h3>
+          </div>
+          <a href="{{ contact.links_email }}">{{ contact.email }}</a>
+          <h3>Адрес</h3>
+          <a href="{{ contact.links_address }}"
+            target="_blank">{{ contact.address }}</a>
+
+        </div>
+        <div class="contact_map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.8528373725794!2d72.80491967553203!3d40.50063715052899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38bdaf414ac6d769%3A0xc824444d158c6f43!2sAmerican%20Dream%20Osh!5e0!3m2!1sru!2skg!4v1701691901718!5m2!1sru!2skg"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  {% include 'include/footer.html' %}
+
+{% endblock %}

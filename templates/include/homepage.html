@@ -1,0 +1,109 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="{% static 'style/header.css' %}">
+  <link rel="stylesheet" href="{% static 'style/style.css' %}">
+  <link rel="stylesheet" href="{% static 'style/home.css' %}">
+  <link rel="stylesheet" href="{% static 'style/card.css' %}">
+  <link rel="stylesheet" href="{% static 'style/footer.css' %}">
+  <link rel="stylesheet" href="{% static 'style/teachers.css' %}">
+  <link rel="stylesheet" href="{% static 'style/questions.css' %}">
+  <link rel="stylesheet" href="{% static 'style/burger.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="{% static 'style/swiper.css' %}">
+  <link rel="stylesheet" href="{% static 'style/modal.css' %}">
+  <link rel="stylesheet" href="{% static 'style/modalSign.css' %}">
+</head>
+
+    {% block content %}
+
+    {% endblock %}
+
+
+    <script>
+        // Пример данных,  бэкенден келе турган 
+        const teachersData = [
+          {
+            name: "Айбек Исмаилов",
+            image: "./img/Ellipse 11.png",
+            achievements: [
+              "Специалист по подготовке к ОРТ",
+              "Опыт работы: 7 лет",
+              "Математике и аналитике",
+              "Подготовил более 500 учеников",
+              "Балл его выпускников – 190+ на ОРТ"
+            ]
+          },
+          {
+            name: "Алина Джумабаева",
+            image: "./img/Ellipse 12.png",
+            achievements: [
+              "Преподаватель английского языка",
+              "Опыт работы: 5 лет",
+              "Сертификат IELTS 8.0",
+              "Подготовила более 300 студентов",
+              "Специалист по General English"
+            ]
+          },
+          {
+            name: "Руслан Токтосунов",
+            image: "./img/Ellipse 13.png",
+            achievements: [
+              "Эксперт по TOEFL",
+              "Опыт работы: 6 лет",
+              "Магистр лингвистики",
+              "Разработчик авторских методик",
+              "Подготовил более 400 студентов"
+            ]
+          }
+        ];
+    
+        function renderTeachers(teachers) {
+          const teachersMenu = document.getElementById('teachersMenu');
+          const teachersInfo = document.getElementById('teachersInfo');
+    
+          teachers.forEach(teacher => {
+            const teacherMenuDiv = document.createElement('div');
+            teacherMenuDiv.innerHTML = `
+              <img src="${teacher.image}" alt="${teacher.name}">
+              <h4>${teacher.name}</h4>
+            `;
+            teachersMenu.appendChild(teacherMenuDiv);
+    
+            const teacherInfoDiv = document.createElement('div');
+            teacherInfoDiv.classList.add('teacher_info_block');
+            teacherInfoDiv.innerHTML = `
+              <div>
+                <img src="${teacher.image}" alt="${teacher.name}">
+                <div>
+                  <h6>Кто преподает?</h6>
+                  <h4>${teacher.name}</h4>
+                </div>
+              </div>
+              <div class="teacher_info_block_data">
+                <p>Достижения:</p>
+                <div class="teacher_info_block_achivements">
+                  ${teacher.achievements.map(achievement => `<h5>${achievement}</h5>`).join('')}
+                </div>
+              </div>
+            `;
+            teachersInfo.appendChild(teacherInfoDiv);
+          });
+        }
+    
+        renderTeachers(teachersData);
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+      <script src="{% static 'js/swiper.js' %}"></script>
+      <script src="{% static 'js/courses.js' %}"></script>
+      <script src="{% static 'js/teachers.js' %}"></script>
+      <script src="{% static 'js/burger.js' %}"></script>
+    </body>
+    
+    </html>
