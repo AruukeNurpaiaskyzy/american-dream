@@ -31,29 +31,25 @@
             </div>
           </div>
           <div style="background-image: url({{ settings.image_about.url }});" class="about_group_top_right">
-            <h4>Интенсивная и разнообразная разговорная практика</h4>
+            {% comment %} <h4>{{settings.description_about3|safe}}</h4> {% endcomment %}
           </div>
         </div>
         <div class="about_group_bottom">
           <div class="about_group_bottom_left">
-            <img id="B1" src="./img/aboutUs/BECB1HIGHTER.png" alt="vector">
-            <img id="B2" src="./img/aboutUs/BECB2VONTAGE.png" alt="vector">
-            <img id="DUOLINGO" src="./img/aboutUs/DUOLINGO.png" alt="vector">
-            <img id="IELTS" src="./img/aboutUs/IELTS.png" alt="vector">
-            <img id="SAT" src="./img/aboutUs/SAT.png" alt="vector">
-            <img id="V1" src="./img/aboutUs/VEC1.png" alt="vector">
-            <img id="V2" src="./img/aboutUs/VEC2.png" alt="vector">
-            <img id="V3" src="./img/aboutUs/VEC3.png" alt="vector">
+            <img id="B1" src="{{ settings.images_about1.url }}">
+            <img id="B2" src="{{ settings.images_about2.url }}">
+            <img id="DUOLINGO" src="{{ settings.images_about3.url }}" alt="vector">
+            <img id="IELTS" src="{{ settings.images_about4.url }}" alt="vector">
+            <img id="SAT" src="{{ settings.images_about5.url }}" alt="vector">
+            <img id="V1" src="{{ settings.images_about6.url }}" alt="vector">
+            <img id="V2" src="{{ settings.images_about7.url }}" alt="vector">
+            <img id="V3" src="{{ settings.images_about8.url }}" alt="vector">
           </div>
 
           <div class="about_group_bottom_right">
             <img src="./img/aboutUs/right/rec1.png" alt="vec" id="r_vec1">
             <img src="./img/aboutUs/right/rec2.png" alt="vec" id="r_vec2">
-            <h2 class="about_group_bottom_right_title">Возможность потгодовится к международному экзамену </h2>
-            <p class="aboutUs__row_cards_right_r_text">В ходе обучения вы сможете не только улучшать владение
-              английским, но и разобраться в структуре и тонкостях живогоносного течения.</p>
-            <p class="aboutUs__row_cards_right_r_text2">Преподаватель поможет вам отработать технику произношения
-              каждого из звуков течения и поделится секретами и лайфхаками.</p>
+            <h2 class="about_group_bottom_right_title">{{settings.description_about4|safe}}</p>
           </div>
         </div>
 
@@ -67,7 +63,7 @@
     <div class="container">
       <div class="courses_head">
 
-        <h2 class="title_h2">Популярные курсы</h2>
+        <h2 class="title_h2">{{settings.popular_courses|safe}}</h2>
         <div class="swiper-navigation">
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
@@ -421,21 +417,51 @@
     <div class="container">
       <h2 class="title_h2">Наши преподаватели</h2>
       <div class="teachers">
-        <div class="teachers_menu" id="teachersMenu">
+        <div class="teachers_menu">
+          {% for teacher in teachers %}
+          <div>
+            <img src="{{ teacher.photo.url }}" alt="{{ teacher.name }}">
+            <h4>{{ teacher.name }}</h4>
+          </div>
+          {% endfor %}
         </div>
-        <div class="teachers_info" id="teachersInfo">
+  
+        <div class="teachers_info">
+          {% for teacher in teachers %}
+          <div class="teacher_info_block">
+            <div>
+              <img src="{{ teacher.photo.url }}" alt="{{ teacher.name }}">
+              <div>
+                <h6>{{ teacher.bio_title }}</h6>
+                <h4>{{ teacher.name }}</h4>
+              </div>
+            </div>
+            <div class="teacher_info_block_data">
+              <p>Достижения:</p>
+              <div class="teacher_info_block_achivements">
+                {% for ach in teacher.achievements.all %}
+                  <h5>{{ ach.text }}</h5>
+                {% endfor %}
+                <h5>{{ teacher.experience }}</h5>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
         </div>
       </div>
-    </div> 
+    </div>
   </section>
+
+
+
+
   <!--questions  -->
   <section id="questions">
     <div class="container">
       <div class="questions">
         <div class="questions_text">
-          <h4>Поможем решить все вопросы</h4>
-          <p>Если вы хотите больше узнать о American dream osh или не знает, какую программу обучение выбрать оставьте
-            заявку - и мы перезвоним </p>
+          <h4>{{settings.feedback}}</h4>
+          <p>{{settings.feedback_description|safe}}</p>
         </div>
         <div class="questions_form">
           <input type="text" placeholder="имя">

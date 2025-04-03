@@ -8,9 +8,9 @@
     </a>
     <nav>
         <ul>
-            <li><a href="./courses.html">Курсы</a></li>
-            <li><a href="./about.html">О нас</a></li>
-            <li><a href="./index.html#contact">Контакты</a></li>
+            <li><a href="{% url 'courses' %}">Курсы</a></li>
+            <li><a href="{% url 'about' %}">О нас</a></li>
+            <li><a href="{% url 'settings' %}">Контакты</a></li>
         </ul>
     </nav>
     <button class="btn header_btn"><a href="#questions">
@@ -24,9 +24,9 @@
 
         <div class="menu__box">
             <div class="burger-menu__nav">
-                <a class="burger-menu__nav_nav" href="./courses.html">Курсы</a>
-                <a class="burger-menu__nav_nav" href="./about.html">О нас</a>
-                <a class="burger-menu__nav_nav" href="./index.html#contact">Контакты</a>
+                <a class="burger-menu__nav_nav" href="{% url 'courses' %}">Курсы</a>
+                <a class="burger-menu__nav_nav" href="{% url 'about' %}">О нас</a>
+                <a class="burger-menu__nav_nav" href="{% url 'settings' %}">Контакты</a>
                 <a class="burger-menu__nav_nav btn" href="#">Записаться</a>
             </div>
         </div>
