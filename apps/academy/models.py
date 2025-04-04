@@ -30,39 +30,6 @@ class Settings(models.Model):
     description_about4 = RichTextField(
         verbose_name='Описание О нас 4'
     )
-    images_about1 = models.ImageField(
-        upload_to='settings',
-        verbose_name='Фотка'
-    )
-    images_about2 = models.ImageField(
-        upload_to='settings',
-        verbose_name='Фотка'
-    )
-    images_about3 = models.ImageField(
-        upload_to='settings',
-        verbose_name='Фотка'
-    )
-    images_about4 = models.ImageField(
-        upload_to='settings',
-        verbose_name='Фотка'
-    )
-    images_about5 = models.ImageField(
-        upload_to='settings',
-        verbose_name='Фотка'
-    )
-    images_about6 = models.ImageField(
-        upload_to='settings',
-        verbose_name='Фотка'
-    )
-    images_about7 = models.ImageField(
-        upload_to='settings',
-        verbose_name='Фотка'
-    )
-    images_about8 = models.ImageField(
-        upload_to='settings',
-        verbose_name='Фотка'
-    )
-
     popular_courses = models.CharField(
         max_length=155,
         verbose_name='Популярные курсы'
@@ -184,3 +151,83 @@ class AboutObjects2(models.Model):
         verbose_name_plural = 'Данные 2'
 
 
+# class Course(models.Model):
+#     LANGUAGE_CHOICES = [
+#         ('en', 'Английский'),
+#         ('Back-End', 'Back-End'),
+#         ('Front-End', 'Front-End'),
+#         ('UX-Ui', 'UX-Ui'),
+
+#          ('ar', 'арабский'),
+#           ('ort', 'орт'),
+#         # другие языки, если есть
+#     ]
+
+#     title = models.CharField(max_length=255)
+#     subtitle = models.CharField(max_length=255, help_text="Например: Starter (0–3 уровень)")
+#     photo = models.ImageField(upload_to = 'courses/', verbose_name = 'фото')
+#     description = models.TextField()
+#     details = models.TextField(help_text="Текст для модального окна (подробнее)")
+#     original_price = models.IntegerField()
+#     discounted_price = models.IntegerField()
+#     monthly_price = models.IntegerField()
+#     discount_percent = models.IntegerField()
+#     language = models.CharField(max_length=15, choices=LANGUAGE_CHOICES)
+#     color_theme = models.CharField(max_length=50, help_text="Цвет темы: light-purple, dark-blue, green и т.д.", default='light-purple')
+
+#     def __str__(self):
+#         return f"{self.title} - {self.subtitle}"
+
+
+class Courses(models.Model):
+    title = models.CharField(max_length=255, verbose_name='заголовок')
+    direction = models.CharField(max_length=255, verbose_name='направление')
+    photo = models.ImageField(upload_to = 'courses/', verbose_name = 'фото')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
+    duration_months = models.PositiveIntegerField(verbose_name="Продолжительность (мес.)")
+    discounted_price = models.IntegerField()
+    monthly_price = models.IntegerField()
+    color_theme = models.CharField(max_length=50, help_text="Цвет темы: light-purple, dark-blue, green и т.д.")
+    title_model = RichTextField(
+        verbose_name='Заголовка Модельного окна'
+    )
+    description_model = RichTextField(
+        verbose_name='Описание Модельного окна'
+    )
+
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name_plural = 'Курсы'
+    
+class CoursesProgram(models.Model):
+    course = models.ForeignKey(Courses, on_delete=models.CASCADE, related_name='programs')
+    title = models.CharField(max_length=155, verbose_name='Заголовка')
+
+    def __str__(self):
+        return self.title
+
+
+class CourseApplication(models.Model):
+    full_name = models.CharField(max_length=255, verbose_name="Имя")
+    phone = models.CharField(max_length=20, verbose_name="Телефон")
+    email = models.EmailField(verbose_name="Email", blank=True)
+    course = models.ForeignKey('Courses', on_delete=models.CASCADE, verbose_name="Курс")
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.full_name} - {self.course.title}"
+
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Имя")
+    phone = models.CharField(max_length=30, verbose_name="Телефон")
+    email = models.EmailField(verbose_name="Email")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.phone})"
+    

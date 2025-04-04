@@ -1,17 +1,37 @@
 from django.shortcuts import render
-from apps.academy.models import Settings, Contacts, Teacher, AboutPage, AboutObjects, AboutObjects2
+from apps.academy.models import  Settings, Contacts, Teacher, AboutPage, AboutObjects, AboutObjects2, Courses, Feedback
+from django.core.mail import send_mail
+from django.conf import settings as st
 from django.views.generic import TemplateView
+from django.shortcuts import redirect, get_object_or_404
+from django.http import JsonResponse
+from .forms import CourseApplicationForm
+import requests
 
 # Create your views here.
 def settings(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        email = request.POST.get('email')
+
+        # Сохраняем в базу
+        Feedback.objects.create(name=name, phone=phone, email=email)
+
+        # Отправляем на почту
+        subject = 'Новая заявка с сайта'
+        message = f'Имя: {name}\nТелефон: {phone}\nEmail: {email}'
+        recipient_list = ['your_email@example.com']  # замени на нужный email
+
+        send_mail(subject, message, st.DEFAULT_FROM_EMAIL, recipient_list)
+
+        return redirect('/')
     settings = Settings.objects.latest("id")
     contact = Contacts.objects.latest("id")
     # courses = PageCourses.objects.latest('id')
     teachers = Teacher.objects.prefetch_related('achievements')
-
+    courses = Courses.objects.prefetch_related('programs')
     return render (request, 'index.html', locals())
-
-
 
 class AboutView(TemplateView):
     template_name = 'about.html'
@@ -33,3 +53,25 @@ class AboutView(TemplateView):
 
 def courses(request):
     return render (request, 'courses.html', locals())
+
+
+def submit_application(request, course_id):
+    course = get_object_or_404(Courses, id=course_id)
+
+    if request.method == 'POST':
+        form = CourseApplicationForm(request.POST)
+        if form.is_valid():
+            application = form.save(commit=False)
+            application.course = course
+            application.save()
+
+            # отправка в WhatsApp (пример)
+            message = f"Заявка на курс: {course.title}\nИмя: {application.full_name}\nТелефон: {application.phone}\nEmail: {application.email}"
+            whatsapp_url = f"https://api.whatsapp.com/send?phone=+996xxxxxxxxx&text={message}"
+            requests.get(whatsapp_url)  # или используем Twilio, CallMeBot, Chat API
+
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors})
+
+    return JsonResponse({'success': False, 'error': 'Invalid method'})
