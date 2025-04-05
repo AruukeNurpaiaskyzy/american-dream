@@ -88,155 +88,220 @@
           <button data-category="ort">Подготовка к ОРТ</button>
           <button data-category="arabic">Арабский язык</button>
         </div>
+      
         <div class="data_info">
-          {%for i in %}
+          
           <div id="english" class="data_info_content">
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>{{ courses.title }}</p>
-                  <h5>{{ courses.direction }}</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>Базовая грамматика</li>
-                <li>Разговорная практика</li>
-                <li>Аудирование</li>
-                <li>Письменные навыки</li>
-                <li>Vocabulary building</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">6000 </p>
-                    <p class="card_discount_title">5600 сом</p>
+            {% for course in courses_all %}
+              {% if course.direction == "english" %}
+                <div class="card {{ course.color_theme }}">
+                  <div class="card_img">
+                    <div>
+                      <p>{{ course.title }}</p>
+                      <h5>{{ course.direction }}</h5>
+                    </div>
+                    <img src="{{ course.photo.url }}" style="width: 135px; height: 135px;" alt="">
                   </div>
-                  <div class="card_price_minus">-5%</div>
+                  <ul class="card_list">
+                    {% for program in course.programs.all %}
+                      <li>{{ program.title }}</li>
+                    {% empty %}
+                      <li>Нет программ</li>
+                    {% endfor %}
+                  </ul>
+                  <div class="card_discount">
+                    <div class="card_discount_head">
+                      <div>
+                        <p class="card_discount_title line-through">{{ course.price }} сом</p>
+                        <p class="card_discount_title">{{ course.discounted_price }} сом</p>
+                      </div>
+                      <div class="card_price_minus">
+                        -{{ course.discount_percent }}%
+                      </div>
+                    </div>
+                    <div class="card_price">
+                      <h1 class="card_price_n">{{ course.monthly_price }}</h1>
+                      <p class="card_price_som">сом/мес</p>
+                    </div>
+                  </div>
+                  <div class="card_btn">
+                    <button class="detailed">подробнее</button>
+                    <button class="signup">Записаться</button>
+                  </div>
                 </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">3,000</h1>
-                  <p class="card_price_som">сом/мес</p>
-                </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
+              {% endif %}
+            {% endfor %}
           </div>
+      
+          <!-- IT -->
           <div id="it" class="data_info_content">
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>IT курсы</p>
-                  <h5>Frontend Developer</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>HTML/CSS</li>
-                <li>JavaScript</li>
-                <li>React</li>
-                <li>Git</li>
-                <li>Проектная работа</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">8000 сом</p>
-                    <p class="card_discount_title">7200 сом</p>
+            {% for course in courses_all %}
+              {% if course.direction == "it" %}
+                <!-- та же карточка -->
+                <div class="card {{ course.color_theme }}">
+                  <div class="card_img">
+                    <div>
+                      <p>{{ course.title }}</p>
+                      <h5>{{ course.direction }}</h5>
+                    </div>
+                    <img src="{{ course.photo.url }}" style="width: 135px; height: 135px;" alt="">
                   </div>
-                  <div class="card_price_minus">-10%</div>
+                  <ul class="card_list">
+                    {% for program in course.programs.all %}
+                      <li>{{ program.title }}</li>
+                    {% empty %}
+                      <li>Нет программ</li>
+                    {% endfor %}
+                  </ul>
+                  <div class="card_discount">
+                    <div class="card_discount_head">
+                      <div>
+                        <p class="card_discount_title line-through">{{ course.price }} сом</p>
+                        <p class="card_discount_title">{{ course.discounted_price }} сом</p>
+                      </div>
+                      <div class="card_price_minus">
+                        -{{ course.discount_percent }}%
+                      </div>
+                    </div>
+                    <div class="card_price">
+                      <h1 class="card_price_n">{{ course.monthly_price }}</h1>
+                      <p class="card_price_som">сом/мес</p>
+                    </div>
+                  </div>
+                  <div class="card_btn">
+                    <button class="detailed">подробнее</button>
+                    <button class="signup">Записаться</button>
+                  </div>
                 </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">4,000</h1>
-                  <p class="card_price_som">сом/мес</p>
                 </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
+              {% endif %}
+            {% endfor %}
           </div>
-
+      
+          <!-- ОРТ -->
           <div id="ort" class="data_info_content">
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>ОРТ</p>
-                  <h5>Подготовка к ОРТ</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>Математика</li>
-                <li>Аналогии</li>
-                <li>Чтение и понимание</li>
-                <li>Практические тесты</li>
-                <li>Пробные экзамены</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">7000 сом</p>
-                    <p class="card_discount_title">6300 сом</p>
+            {% for course in courses_all %}
+              {% if course.direction == "ort" %}
+                <!-- та же карточка -->
+                <div class="card {{ course.color_theme }}">
+                  <div class="card_img">
+                    <div>
+                      <p>{{ course.title }}</p>
+                      <h5>{{ course.direction }}</h5>
+                    </div>
+                    <img src="{{ course.photo.url }}" style="width: 135px; height: 135px;" alt="">
                   </div>
-                  <div class="card_price_minus">-10%</div>
+                  <ul class="card_list">
+                    {% for program in course.programs.all %}
+                      <li>{{ program.title }}</li>
+                    {% empty %}
+                      <li>Нет программ</li>
+                    {% endfor %}
+                  </ul>
+                  <div class="card_discount">
+                    <div class="card_discount_head">
+                      <div>
+                        <p class="card_discount_title line-through">{{ course.price }} сом</p>
+                        <p class="card_discount_title">{{ course.discounted_price }} сом</p>
+                      </div>
+                      <div class="card_price_minus">
+                        -{{ course.discount_percent }}%
+                      </div>
+                    </div>
+                    <div class="card_price">
+                      <h1 class="card_price_n">{{ course.monthly_price }}</h1>
+                      <p class="card_price_som">сом/мес</p>
+                    </div>
+                  </div>
+                  <div class="card_btn">
+                    <button class="detailed">подробнее</button>
+                    <button class="signup">Записаться</button>
+                  </div>
                 </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">3,500</h1>
-                  <p class="card_price_som">сом/мес</p>
                 </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
+              {% endif %}
+            {% endfor %}
           </div>
-
+      
+          <!-- Арабский -->
           <div id="arabic" class="data_info_content">
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>Арабский язык</p>
-                  <h5>Начальный уровень</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>Алфавит и письмо</li>
-                <li>Базовая грамматика</li>
-                <li>Разговорная речь</li>
-                <li>Чтение Корана</li>
-                <li>Культура и традиции</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">6500 сом</p>
-                    <p class="card_discount_title">5850 сом</p>
+            {% for course in courses_all %}
+              {% if course.direction == "arabic" %}
+                <!-- та же карточка -->
+                <div class="card {{ course.color_theme }}">
+                  <div class="card_img">
+                    <div>
+                      <p>{{ course.title }}</p>
+                      <h5>{{ course.direction }}</h5>
+                    </div>
+                    <img src="{{ course.photo.url }}" style="width: 135px; height: 135px;" alt="">
                   </div>
-                  <div class="card_price_minus">-10%</div>
+                  <ul class="card_list">
+                    {% for program in course.programs.all %}
+                      <li>{{ program.title }}</li>
+                    {% empty %}
+                      <li>Нет программ</li>
+                    {% endfor %}
+                  </ul>
+                  <div class="card_discount">
+                    <div class="card_discount_head">
+                      <div>
+                        <p class="card_discount_title line-through">{{ course.price }} сом</p>
+                        <p class="card_discount_title">{{ course.discounted_price }} сом</p>
+                      </div>
+                      <div class="card_price_minus">
+                        -{{ course.discount_percent }}%
+                      </div>
+                    </div>
+                    <div class="card_price">
+                      <h1 class="card_price_n">{{ course.monthly_price }}</h1>
+                      <p class="card_price_som">сом/мес</p>
+                    </div>
+                  </div>
+                  <div class="card_btn">
+                    <button class="detailed">подробнее</button>
+                    <button class="signup">Записаться</button>
+                  </div>
                 </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">3,300</h1>
-                  <p class="card_price_som">сом/мес</p>
                 </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
+              {% endif %}
+            {% endfor %}
           </div>
         </div>
       </div>
+      
     </div>
   </section>
-
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const buttons = document.querySelectorAll('.data_btns button');
+      const contents = document.querySelectorAll('.data_info_content');
+  
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const category = button.dataset.category;
+  
+          // Сброс активных кнопок
+          buttons.forEach(btn => btn.classList.remove('active'));
+  
+          // Скрыть все блоки
+          contents.forEach(content => content.style.display = 'none');
+  
+          // Показать нужный
+          document.getElementById(category).style.display = 'block';
+  
+          // Активировать кнопку
+          button.classList.add('active');
+        });
+      });
+  
+      // По умолчанию показать первый блок
+      contents.forEach((content, index) => {
+        content.style.display = index === 0 ? 'block' : 'none';
+      });
+    });
+  </script>
+  
   <div class="modal">
     <div class="container">
       <div class="modal_content">

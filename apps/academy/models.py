@@ -150,10 +150,13 @@ class AboutObjects2(models.Model):
         verbose_name = 'Данный 2'
         verbose_name_plural = 'Данные 2'
 
+class TypeCourse(models.Model):
+    title = models.CharField(max_length=255, verbose_name='тип курсов')
+
 
 class Courses(models.Model):
     title = models.CharField(max_length=255, verbose_name='заголовок')
-    direction = models.CharField(max_length=255, verbose_name='направление')
+    direction = models.ForeignKey(TypeCourse, on_delete = models.CASCADE, verbose_name='направление')
     photo = models.ImageField(upload_to = 'courses/', verbose_name = 'фото')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     duration_months = models.PositiveIntegerField(verbose_name="Продолжительность (мес.)")
@@ -167,6 +170,12 @@ class Courses(models.Model):
         verbose_name='Описание Модельного окна'
     )
 
+
+    @property
+    def discount_percent(self):
+        if self.price:
+            return round((float(self.price) - float(self.discounted_price)) / float(self.price) * 100)
+        return 0
 
     def __str__(self):
         return self.title

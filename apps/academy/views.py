@@ -108,5 +108,5 @@ class AboutView(TemplateView):
 
 def courses(request):
     courses = CoursesPage.objects.latest("id")
-    
+    courses_all = Courses.objects.prefetch_related('programs', 'modals')
     return render (request, 'courses.html', locals())  

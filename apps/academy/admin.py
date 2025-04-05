@@ -1,9 +1,10 @@
 from django.contrib import admin
 from apps.academy.models import Settings, Contacts, Achievement, Teacher, AboutPage,\
- AboutObjects, AboutObjects2, CoursesProgram, Courses, CoursesModel, CoursesPage, CourseApplication
+ AboutObjects, AboutObjects2, CoursesProgram, Courses, CoursesModel, CoursesPage, CourseApplication, TypeCourse
 
 # Register your models here.
 admin.site.register(Settings)
+admin.site.register(TypeCourse)
 admin.site.register(CoursesModel)
 admin.site.register(Contacts)
 admin.site.register(CoursesPage)
