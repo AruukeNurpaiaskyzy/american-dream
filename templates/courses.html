@@ -51,11 +51,8 @@
         </div>
       </div>
     </header>
-    <h1 class="title">Развивайтесь с нами: IT, иностранные языки и подготовка к ОРТ! 🎓</h1>
-    <p class="description">Наши курсы помогут вам освоить востребованные навыки и достичь ваших целей.
-      IT-направления, изучение английского и арабского языков, а также подготовка к ОРТ — все это с поддержкой
-      опытных преподавателей, современными методиками и практическими занятиями. Начните обучение уже сегодня и
-      откройте новые возможности! 🚀📚
+    <h1 class="title">{{ courses.title }} 🎓</h1>
+    <p class="description">{{ courses.description|safe }}
     </p>
   </div>
 
@@ -92,12 +89,13 @@
           <button data-category="arabic">Арабский язык</button>
         </div>
         <div class="data_info">
+          {%for i in %}
           <div id="english" class="data_info_content">
             <div class="card">
               <div class="card_img">
                 <div>
-                  <p>Английский язык</p>
-                  <h5>Beginner (A1-A2)</h5>
+                  <p>{{ courses.title }}</p>
+                  <h5>{{ courses.direction }}</h5>
                 </div>
                 <img src="./img/e404.png" alt="">
               </div>
@@ -111,7 +109,7 @@
               <div class="card_discount">
                 <div class="card_discount_head">
                   <div>
-                    <p class="card_discount_title line-through">6000 сом</p>
+                    <p class="card_discount_title line-through">6000 </p>
                     <p class="card_discount_title">5600 сом</p>
                   </div>
                   <div class="card_price_minus">-5%</div>
@@ -126,308 +124,8 @@
                 <button class="signup">Записаться</button>
               </div>
             </div>
-
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>Английский язык</p>
-                  <h5>Intermediate (B1-B2)</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>Advanced Grammar</li>
-                <li>Business English</li>
-                <li>IELTS Preparation</li>
-                <li>Public Speaking</li>
-                <li>Academic Writing</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">7000 сом</p>
-                    <p class="card_discount_title">6300 сом</p>
-                  </div>
-                  <div class="card_price_minus">-10%</div>
-                </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">3,500</h1>
-                  <p class="card_price_som">сом/мес</p>
-                </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>Английский язык</p>
-                  <h5>Advanced (C1)</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>Complex Grammar</li>
-                <li>Literary Analysis</li>
-                <li>Advanced Writing</li>
-                <li>Cultural Studies</li>
-                <li>Presentation Skills</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">8000 сом</p>
-                    <p class="card_discount_title">7200 сом</p>
-                  </div>
-                  <div class="card_price_minus">-10%</div>
-                </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">4,000</h1>
-                  <p class="card_price_som">сом/мес</p>
-                </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>Английский язык</p>
-                  <h5>Advanced (C1)</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>Complex Grammar</li>
-                <li>Literary Analysis</li>
-                <li>Advanced Writing</li>
-                <li>Cultural Studies</li>
-                <li>Presentation Skills</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">8000 сом</p>
-                    <p class="card_discount_title">7200 сом</p>
-                  </div>
-                  <div class="card_price_minus">-10%</div>
-                </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">4,000</h1>
-                  <p class="card_price_som">сом/мес</p>
-                </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>Английский язык</p>
-                  <h5>Advanced (C1)</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>Complex Grammar</li>
-                <li>Literary Analysis</li>
-                <li>Advanced Writing</li>
-                <li>Cultural Studies</li>
-                <li>Presentation Skills</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">8000 сом</p>
-                    <p class="card_discount_title">7200 сом</p>
-                  </div>
-                  <div class="card_price_minus">-10%</div>
-                </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">4,000</h1>
-                  <p class="card_price_som">сом/мес</p>
-                </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>Английский язык</p>
-                  <h5>Advanced (C1)</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>Complex Grammar</li>
-                <li>Literary Analysis</li>
-                <li>Advanced Writing</li>
-                <li>Cultural Studies</li>
-                <li>Presentation Skills</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">8000 сом</p>
-                    <p class="card_discount_title">7200 сом</p>
-                  </div>
-                  <div class="card_price_minus">-10%</div>
-                </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">4,000</h1>
-                  <p class="card_price_som">сом/мес</p>
-                </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
           </div>
-
           <div id="it" class="data_info_content">
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>IT курсы</p>
-                  <h5>Frontend Developer</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>HTML/CSS</li>
-                <li>JavaScript</li>
-                <li>React</li>
-                <li>Git</li>
-                <li>Проектная работа</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">8000 сом</p>
-                    <p class="card_discount_title">7200 сом</p>
-                  </div>
-                  <div class="card_price_minus">-10%</div>
-                </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">4,000</h1>
-                  <p class="card_price_som">сом/мес</p>
-                </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>IT курсы</p>
-                  <h5>Frontend Developer</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>HTML/CSS</li>
-                <li>JavaScript</li>
-                <li>React</li>
-                <li>Git</li>
-                <li>Проектная работа</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <!-- <p class="card_discount_title line-through">8000 сом</p> -->
-                    <p class="card_discount_title">7200 сом</p>
-                  </div>
-                  <!-- <div class="card_price_minus">-10%</div> -->
-                </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">4,000</h1>
-                  <p class="card_price_som">сом/мес</p>
-                </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>IT курсы</p>
-                  <h5>Frontend Developer</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>HTML/CSS</li>
-                <li>JavaScript</li>
-                <li>React</li>
-                <li>Git</li>
-                <li>Проектная работа</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">8000 сом</p>
-                    <p class="card_discount_title">7200 сом</p>
-                  </div>
-                  <div class="card_price_minus">-10%</div>
-                </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">4,000</h1>
-                  <p class="card_price_som">сом/мес</p>
-                </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card_img">
-                <div>
-                  <p>IT курсы</p>
-                  <h5>Frontend Developer</h5>
-                </div>
-                <img src="./img/e404.png" alt="">
-              </div>
-              <ul class="card_list">
-                <li>HTML/CSS</li>
-                <li>JavaScript</li>
-                <li>React</li>
-                <li>Git</li>
-                <li>Проектная работа</li>
-              </ul>
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">8000 сом</p>
-                    <p class="card_discount_title">7200 сом</p>
-                  </div>
-                  <div class="card_price_minus">-10%</div>
-                </div>
-                <div class="card_price">
-                  <h1 class="card_price_n">4,000</h1>
-                  <p class="card_price_som">сом/мес</p>
-                </div>
-              </div>
-              <div class="card_btn">
-                <button class="detailed">подробнее</button>
-                <button class="signup">Записаться</button>
-              </div>
-            </div>
             <div class="card">
               <div class="card_img">
                 <div>
@@ -626,9 +324,6 @@
            <li> <a href="https://www.instagram.com/americandream.osh/" target="_blank">Instagram</a></li>
            <li>     <a href="https://www.youtube.com/@AmericanDreamOsh" target="_blank">Youtube</a></li>
            <li>      <a href="https://www.tiktok.com/@american.dream4" target="_blank">Tik-tok</a></li>
-
-               
-          
           </ul>
         </div>
         <div class="contacts ul-con">

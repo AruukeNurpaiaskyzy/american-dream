@@ -1,10 +1,13 @@
 from django.contrib import admin
-from apps.academy.models import Settings, Contacts, Achievement, Teacher, AboutPage, AboutObjects, AboutObjects2, CoursesProgram, Courses
+from apps.academy.models import Settings, Contacts, Achievement, Teacher, AboutPage,\
+ AboutObjects, AboutObjects2, CoursesProgram, Courses, CoursesModel, CoursesPage, CourseApplication
 
 # Register your models here.
 admin.site.register(Settings)
-# admin.site.register(Course)
+admin.site.register(CoursesModel)
 admin.site.register(Contacts)
+admin.site.register(CoursesPage)
+admin.site.register(CourseApplication)
 class AchievementInline(admin.TabularInline):
     model = Achievement
     extra = 1

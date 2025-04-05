@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -130,7 +132,7 @@
                   <p>{{ course.direction }}</p>
                   <h5>{{ course.title }}</h5>
                 </div>
-                <img src="{{ course.photo.url }}" style="width: '50px'; height: 100px;" alt="{{ course.title }}">
+                <img src="{{ course.photo.url }}" style="width: 50px; height: 100px;" alt="{{ course.title }}">
               </div>
               <ul class="card_list">
                 {% for program in course.programs.all %}
@@ -139,7 +141,7 @@
                   <li>Нет программ</li>
                 {% endfor %}
               </ul>
-              
+  
               <div class="card_discount">
                 <div class="card_discount_head">
                   <div>
@@ -154,9 +156,10 @@
                   <p class="card_price_som">сом/мес,</p>
                 </div>
               </div>
+  
               <div class="card_btn">
                 <a href="#modal-{{ course.id }}" class="detailed">Подробнее</a>
-                <button class="signup">Записатся</button>
+                <button class="signup">Записаться</button>
               </div>
             </div>
           </div>
@@ -167,38 +170,129 @@
       <a href="{% url 'courses' %}" class="btn courses_btn">Все курсы</a>
     </div>
   </section>
-  
-  <div class="modal">
-    <div class="container">
-      <div class="modal_content">
-        <button>X</button>
-        <div class="modal_hero">
-          <div>
+  <style>
+    .modal_overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
 
-            <h3>Front-end разработчик кто это и чем занимается?</h3>
-            <p>Front-end разработчик – это специалист, который отвечает за создание пользовательского интерфейса (UI)
-              веб-сайтов и веб-приложений. Он делает так, чтобы сайт выглядел привлекательно, работал быстро и был
-              удобным
-              в
-              использовании.</p>
+  .modal_box {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 900px;
+    width: 100%;
+    animation: fadeIn 0.3s ease;
+    position: relative;
+  }
+
+  .modal_close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #555;
+    cursor: pointer;
+  }
+
+  .modal_hero {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .modal_text {
+    flex: 1;
+  }
+
+  .modal_img {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  </style>
+  <!-- Модальные окна для каждого курса -->
+  {% for course in courses %}
+  <div class="modal" id="modal-{{ course.id }}" style="display: none;">
+    <div class="modal_overlay">
+      <div class="modal_box">
+        <button class="modal_close" data-close="{{ course.id }}">×</button>
+
+        <div class="modal_hero">
+          <div class="modal_text">
+            <div>{{ course.title_model|safe }}</div>
+            <div>{{ course.description_model|safe }}</div>
           </div>
-          <img src="{% static 'img/e404.png' %}" alt="">
-        </div>
-        <div class="modal_info">
-          <h4>Основные технологии Front-end разработки</h4>
-          <p>HTML (HyperText Markup Language)
-            Основной язык разметки, который определяет структуру веб-страницы.Позволяет задавать заголовки, абзацы,
-            изображения, ссылки и другие элементы.</p>
-          <h4>CSS (Cascading Style Sheets)</h4>
-          <p>Отвечает за внешний вид сайта.Позволяет стилизовать элементы (цвета, шрифты, анимации, отступы и т.
-            д.).CSS-фреймворки: Bootstrap, Tailwind CSS.</p>
-          <h4>JavaScript (JS)</h4>
-          <p>Язык программирования, который делает сайт динамичным и интерактивным.Используется для создания анимаций,
-            слайдеров, форм, кнопок, модальных окон.JS-библиотеки и фреймворки: React, Vue.js, Angular.</p>
+          <img src="{{ course.photo.url }}" alt="{{ course.title }}" class="modal_img">
         </div>
       </div>
     </div>
   </div>
+  {% endfor %}
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Открытие модалки
+      document.querySelectorAll('.detailed').forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const modalId = this.getAttribute('href').replace('#', '');
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            modal.style.display = 'block';
+            document.body.style = ''; // Блокировка прокрутки
+          }
+        });
+      });
+
+      // Закрытие по кнопке X
+      document.querySelectorAll('.modal_close').forEach(button => {
+        button.addEventListener('click', function () {
+          const id = this.dataset.close;
+          const modal = document.getElementById(`modal-${id}`);
+          if (modal) {
+            modal.style.display = 'none';
+          }
+        });
+      });
+
+      // Закрытие по затемнению (клик по фону)
+      document.querySelectorAll('.modal_overlay').forEach(overlay => {
+        overlay.addEventListener('click', function (e) {
+          if (e.target === this) {
+            const modal = this.closest('.modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+          }
+        });
+      });
+
+      // (Опционально) Закрытие по клавише Esc
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
+          });
+          document.body.style.overflow = '';
+        }
+      });
+
+    });
+  </script>
 
 
   <div id="modalSign">
@@ -228,10 +322,12 @@
             </div>
           </div>
         </div>
-        <form class="modalSign_form" action="/submit-signup" method="POST">
-          <input type="text" name="name" placeholder="имя" required>
+        <form class="modalSign_form" method="POST" action="/">
+          {% csrf_token %}
+          <input type="hidden" name="course_id" value="{{ course.id }}">
+          <input type="text" name="name_register" placeholder="имя" required>
           <div>
-            <input type="tel" name="phone" placeholder="телефона" required>
+            <input type="tel" name="phone_register" placeholder="телефон" required>
             <input type="email" name="email" placeholder="Электронная почта" required>
           </div>
           <button type="submit" class="btn">Отправить</button>

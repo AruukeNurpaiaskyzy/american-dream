@@ -151,34 +151,6 @@ class AboutObjects2(models.Model):
         verbose_name_plural = 'Данные 2'
 
 
-# class Course(models.Model):
-#     LANGUAGE_CHOICES = [
-#         ('en', 'Английский'),
-#         ('Back-End', 'Back-End'),
-#         ('Front-End', 'Front-End'),
-#         ('UX-Ui', 'UX-Ui'),
-
-#          ('ar', 'арабский'),
-#           ('ort', 'орт'),
-#         # другие языки, если есть
-#     ]
-
-#     title = models.CharField(max_length=255)
-#     subtitle = models.CharField(max_length=255, help_text="Например: Starter (0–3 уровень)")
-#     photo = models.ImageField(upload_to = 'courses/', verbose_name = 'фото')
-#     description = models.TextField()
-#     details = models.TextField(help_text="Текст для модального окна (подробнее)")
-#     original_price = models.IntegerField()
-#     discounted_price = models.IntegerField()
-#     monthly_price = models.IntegerField()
-#     discount_percent = models.IntegerField()
-#     language = models.CharField(max_length=15, choices=LANGUAGE_CHOICES)
-#     color_theme = models.CharField(max_length=50, help_text="Цвет темы: light-purple, dark-blue, green и т.д.", default='light-purple')
-
-#     def __str__(self):
-#         return f"{self.title} - {self.subtitle}"
-
-
 class Courses(models.Model):
     title = models.CharField(max_length=255, verbose_name='заголовок')
     direction = models.CharField(max_length=255, verbose_name='направление')
@@ -208,7 +180,25 @@ class CoursesProgram(models.Model):
 
     def __str__(self):
         return self.title
+    
 
+class CoursesModel(models.Model):
+    courses = models.ForeignKey(Courses, on_delete= models.CASCADE, related_name='modals')
+    title_model = RichTextField(
+        verbose_name='Заголовка Модельного окна'
+    )
+    description_model = RichTextField(
+        verbose_name='Описание Модельного окна'
+    )
+    image = models.ImageField(
+        upload_to='courses',
+        verbose_name='Фото'
+    )
+    def __str__(self):
+        return self.title_model
+    
+    class Meta:
+        verbose_name_plural = 'модельное окно'
 
 class CourseApplication(models.Model):
     full_name = models.CharField(max_length=255, verbose_name="Имя")
@@ -220,6 +210,9 @@ class CourseApplication(models.Model):
 
     def __str__(self):
         return f"{self.full_name} - {self.course.title}"
+    class Meta:
+        verbose_name_plural = 'заявление на курсы'
+    
 
 
 class Feedback(models.Model):
@@ -231,3 +224,13 @@ class Feedback(models.Model):
     def __str__(self):
         return f"{self.name} ({self.phone})"
     
+
+class CoursesPage(models.Model):
+    title = models.CharField(max_length=233, verbose_name='заголовок')
+    description = RichTextField(verbose_name='описание')
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name_plural = 'настройка стр курсов'
+

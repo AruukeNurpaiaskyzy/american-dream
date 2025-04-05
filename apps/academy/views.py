@@ -1,37 +1,92 @@
 from django.shortcuts import render
-from apps.academy.models import  Settings, Contacts, Teacher, AboutPage, AboutObjects, AboutObjects2, Courses, Feedback
+from apps.academy.models import  Settings, Contacts, Teacher, \
+AboutPage, AboutObjects, AboutObjects2, Courses, Feedback, CoursesModel, CoursesPage, CourseApplication
 from django.core.mail import send_mail
 from django.conf import settings as st
 from django.views.generic import TemplateView
 from django.shortcuts import redirect, get_object_or_404
 from django.http import JsonResponse
-from .forms import CourseApplicationForm
+# from .forms import CourseApplicationForm
 import requests
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+
+
+@csrf_exempt
 def settings(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        email = request.POST.get('email')
+        print("\n== POST получен ==")
 
-        # Сохраняем в базу
-        Feedback.objects.create(name=name, phone=phone, email=email)
+        # Проверка, это форма записи на курс или форма обратной связи
+        name_register = request.POST.get('name_register')
+        phone_register = request.POST.get('phone_register')
+        email_register = request.POST.get('email_register')
+        # course_id = request.POST.get('course_id')
 
-        # Отправляем на почту
-        subject = 'Новая заявка с сайта'
-        message = f'Имя: {name}\nТелефон: {phone}\nEmail: {email}'
-        recipient_list = ['your_email@example.com']  # замени на нужный email
+        # === Если форма записи на курс ===
+        if name_register and phone_register:
+            print("Это заявка на курс")
+            print("Имя:", name_register)
+            # print("Курс ID:", course_id)
+            print("Тел:", phone_register)
 
-        send_mail(subject, message, st.DEFAULT_FROM_EMAIL, recipient_list)
+            try:
+                course = get_object_or_404(Courses)
+
+                # Сохраняем в БД
+                CourseApplication.objects.create(
+                    full_name=name_register,
+                    phone=phone_register,
+                    email=email_register,
+                    course=course
+                )
+
+                # Отправка в WhatsApp
+                whatsapp_number = '996558486448'
+                api_key = '9478477'
+                message = f"\U0001F4DA Новая заявка:\n\U0001F464 {name_register}\n\U0001F4DE {phone_register}\n\U0001F4E7 {email_register}\n\U0001F393 {course.title}"
+                requests.get(
+                    f"https://api.callmebot.com/whatsapp.php?phone={whatsapp_number}&text={requests.utils.quote(message)}&apikey={api_key}"
+                )
+
+            except Exception as e:
+                print(f"Ошибка при отправке WhatsApp или сохранении: {e}")
+
+        # === Иначе это форма обратной связи ===
+        else:
+            name = request.POST.get('name')
+            phone = request.POST.get('phone')
+            email = request.POST.get('email')
+
+            print("Это обратная связь")
+            print("Имя:", name)
+            print("Тел:", phone)
+
+            Feedback.objects.create(name=name, phone=phone, email=email)
+
+            subject = 'Новая обратная связь'
+            message = f'Имя: {name}\nТелефон: {phone}\nEmail: {email}'
+            recipient_list = ['aruukelisa@gmail.com.com']
+            send_mail(subject, message, st.DEFAULT_FROM_EMAIL, recipient_list)
 
         return redirect('/')
-    settings = Settings.objects.latest("id")
+
+    # === GET запрос ===
+    settings_obj = Settings.objects.latest("id")
     contact = Contacts.objects.latest("id")
-    # courses = PageCourses.objects.latest('id')
     teachers = Teacher.objects.prefetch_related('achievements')
-    courses = Courses.objects.prefetch_related('programs')
-    return render (request, 'index.html', locals())
+    courses = Courses.objects.prefetch_related('programs', 'modals')
+    model_all_dict = {model.courses.id: model for model in CoursesModel.objects.all()}
+
+    return render(request, 'index.html', {
+        'settings': settings_obj,
+        'contact': contact,
+        'teachers': teachers,
+        'courses': courses,
+        'model_all': model_all_dict
+    })
+
+
 
 class AboutView(TemplateView):
     template_name = 'about.html'
@@ -52,26 +107,6 @@ class AboutView(TemplateView):
         return context
 
 def courses(request):
-    return render (request, 'courses.html', locals())
-
-
-def submit_application(request, course_id):
-    course = get_object_or_404(Courses, id=course_id)
-
-    if request.method == 'POST':
-        form = CourseApplicationForm(request.POST)
-        if form.is_valid():
-            application = form.save(commit=False)
-            application.course = course
-            application.save()
-
-            # отправка в WhatsApp (пример)
-            message = f"Заявка на курс: {course.title}\nИмя: {application.full_name}\nТелефон: {application.phone}\nEmail: {application.email}"
-            whatsapp_url = f"https://api.whatsapp.com/send?phone=+996xxxxxxxxx&text={message}"
-            requests.get(whatsapp_url)  # или используем Twilio, CallMeBot, Chat API
-
-            return JsonResponse({'success': True})
-        else:
-            return JsonResponse({'success': False, 'errors': form.errors})
-
-    return JsonResponse({'success': False, 'error': 'Invalid method'})
+    courses = CoursesPage.objects.latest("id")
+    
+    return render (request, 'courses.html', locals())  
