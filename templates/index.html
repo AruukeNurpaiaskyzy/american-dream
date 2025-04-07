@@ -48,7 +48,7 @@
 
         <div class="menu__box">
           <a href="{% url 'settings' %}">
-            <img src="./img/logo.svg" alt="">
+            <img src="{% static 'img/logo.svg' %}" alt="">
 
           </a>
           <div class="burger-menu__nav">
@@ -428,7 +428,7 @@
   <!-- footer -->
   <footer class="footer">
     <div class="footer-section-1">
-      <img src="img/logo.svg" alt="logo" class="logo-footer" />
+      <img src="{% static 'img/logo.svg' %}" alt="logo" class="logo-footer" />
       <div class="uls">
         <div class="site-sections ul-con">
           <h2>Разделы сайтов</h2>
@@ -441,12 +441,9 @@
         <div class="social-madia ul-con">
           <h2>Соц. сети</h2>
           <ul>
-           <li> <a href="https://www.instagram.com/americandream.osh/" target="_blank">Instagram</a></li>
-           <li>     <a href="https://www.youtube.com/@AmericanDreamOsh" target="_blank">Youtube</a></li>
-           <li>      <a href="https://www.tiktok.com/@american.dream4" target="_blank">Tik-tok</a></li>
-
-               
-          
+           <li> <a href="{{ settings.linksinsta }}" target="_blank">Instagram</a></li>
+           <li> <a href="{{ settings.linksyoutube }}" target="_blank">Youtube</a></li>
+           <li> <a href="{{ settings.linkstiktok }}" target="_blank">Tik-tok</a></li>
           </ul>
         </div>
         <div class="contacts ul-con">

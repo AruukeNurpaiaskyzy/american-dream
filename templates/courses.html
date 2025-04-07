@@ -21,15 +21,15 @@
   <div class="hero courses container">
 
     <header>
-      <a href="./index.html">
-        <img src="./img/logo.svg" alt="">
+      <a href="{% url 'settings' %}">
+        <img src="{% static 'img/logo.svg' %}" alt="">
 
       </a>
       <nav>
         <ul>
-          <li><a href="./courses.html">Курсы</a></li>
-          <li><a href="./about.html">О нас</a></li>
-          <li><a href="./index.html#contact">Контакты</a></li>
+          <li><a href="{% url 'courses' %}">Курсы</a></li>
+          <li><a href="{% url 'about' %}">О нас</a></li>
+          <li><a href="{% url 'settings' %}">Контакты</a></li>
         </ul>
       </nav>
       <button class="btn header_btn"><a href="#questions">
@@ -82,196 +82,65 @@
   <section id="data">
     <div class="container">
       <div class="data">
+  
+        <!-- Кнопки -->
         <div class="data_btns">
-          <button data-category="english" class="active">Английский язык</button>
-          <button data-category="it">Курсы IT</button>
-          <button data-category="ort">Подготовка к ОРТ</button>
-          <button data-category="arabic">Арабский язык</button>
+          {% for direction in directions %}
+            <button data-category="{{ direction.id }}" class="{% if forloop.first %}active{% endif %}">
+              {{ direction.title }}
+            </button>
+          {% endfor %}
         </div>
-      
+  
+        <!-- Контент -->
         <div class="data_info">
-          
-          <div id="english" class="data_info_content">
-            {% for course in courses_all %}
-              {% if course.direction == "english" %}
-                <div class="card {{ course.color_theme }}">
-                  <div class="card_img">
-                    <div>
-                      <p>{{ course.title }}</p>
-                      <h5>{{ course.direction }}</h5>
-                    </div>
-                    <img src="{{ course.photo.url }}" style="width: 135px; height: 135px;" alt="">
-                  </div>
-                  <ul class="card_list">
-                    {% for program in course.programs.all %}
-                      <li>{{ program.title }}</li>
-                    {% empty %}
-                      <li>Нет программ</li>
-                    {% endfor %}
-                  </ul>
-                  <div class="card_discount">
-                    <div class="card_discount_head">
+          {% for direction in directions %}
+            <div id="{{ direction.id }}" class="data_info_content {% if not forloop.first %}hidden{% endif %}">
+              {% for course in courses_all %}
+                {% if course.direction.id == direction.id %}
+                  <div class="card {{ course.color_theme }}">
+                    <div class="card_img">
                       <div>
-                        <p class="card_discount_title line-through">{{ course.price }} сом</p>
-                        <p class="card_discount_title">{{ course.discounted_price }} сом</p>
+                        <p>{{ course.title }}</p>
+                        <h5>{{ course.direction.title }}</h5>
                       </div>
-                      <div class="card_price_minus">
-                        -{{ course.discount_percent }}%
+                      <img src="{{ course.photo.url }}" style="width: 135px; height: 135px;" alt="">
+                    </div>
+                    <ul class="card_list">
+                      {% for program in course.programs.all %}
+                        <li>{{ program.title }}</li>
+                      {% empty %}
+                        <li>Нет программ</li>
+                      {% endfor %}
+                    </ul>
+                    <div class="card_discount">
+                      <div class="card_discount_head">
+                        <div>
+                          <p class="card_discount_title line-through">{{ course.price }} сом</p>
+                          <p class="card_discount_title">{{ course.discounted_price }} сом</p>
+                        </div>
+                        <div class="card_price_minus">-{{ course.discount_percent }}%</div>
                       </div>
-                    </div>
-                    <div class="card_price">
-                      <h1 class="card_price_n">{{ course.monthly_price }}</h1>
-                      <p class="card_price_som">сом/мес</p>
-                    </div>
-                  </div>
-                  <div class="card_btn">
-                    <button class="detailed">подробнее</button>
-                    <button class="signup">Записаться</button>
-                  </div>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-      
-          <!-- IT -->
-          <div id="it" class="data_info_content">
-            {% for course in courses_all %}
-              {% if course.direction == "it" %}
-                <!-- та же карточка -->
-                <div class="card {{ course.color_theme }}">
-                  <div class="card_img">
-                    <div>
-                      <p>{{ course.title }}</p>
-                      <h5>{{ course.direction }}</h5>
-                    </div>
-                    <img src="{{ course.photo.url }}" style="width: 135px; height: 135px;" alt="">
-                  </div>
-                  <ul class="card_list">
-                    {% for program in course.programs.all %}
-                      <li>{{ program.title }}</li>
-                    {% empty %}
-                      <li>Нет программ</li>
-                    {% endfor %}
-                  </ul>
-                  <div class="card_discount">
-                    <div class="card_discount_head">
-                      <div>
-                        <p class="card_discount_title line-through">{{ course.price }} сом</p>
-                        <p class="card_discount_title">{{ course.discounted_price }} сом</p>
-                      </div>
-                      <div class="card_price_minus">
-                        -{{ course.discount_percent }}%
+                      <div class="card_price">
+                        <h1 class="card_price_n">{{ course.monthly_price }}</h1>
+                        <p class="card_price_som">сом/мес</p>
                       </div>
                     </div>
-                    <div class="card_price">
-                      <h1 class="card_price_n">{{ course.monthly_price }}</h1>
-                      <p class="card_price_som">сом/мес</p>
+                    <div class="card_btn">
+                      <a href="#modal-{{ course.id }}" class="detailed">Подробнее</a>
+                      <button class="signup">Записаться</button>
                     </div>
                   </div>
-                  <div class="card_btn">
-                    <button class="detailed">подробнее</button>
-                    <button class="signup">Записаться</button>
-                  </div>
-                </div>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-      
-          <!-- ОРТ -->
-          <div id="ort" class="data_info_content">
-            {% for course in courses_all %}
-              {% if course.direction == "ort" %}
-                <!-- та же карточка -->
-                <div class="card {{ course.color_theme }}">
-                  <div class="card_img">
-                    <div>
-                      <p>{{ course.title }}</p>
-                      <h5>{{ course.direction }}</h5>
-                    </div>
-                    <img src="{{ course.photo.url }}" style="width: 135px; height: 135px;" alt="">
-                  </div>
-                  <ul class="card_list">
-                    {% for program in course.programs.all %}
-                      <li>{{ program.title }}</li>
-                    {% empty %}
-                      <li>Нет программ</li>
-                    {% endfor %}
-                  </ul>
-                  <div class="card_discount">
-                    <div class="card_discount_head">
-                      <div>
-                        <p class="card_discount_title line-through">{{ course.price }} сом</p>
-                        <p class="card_discount_title">{{ course.discounted_price }} сом</p>
-                      </div>
-                      <div class="card_price_minus">
-                        -{{ course.discount_percent }}%
-                      </div>
-                    </div>
-                    <div class="card_price">
-                      <h1 class="card_price_n">{{ course.monthly_price }}</h1>
-                      <p class="card_price_som">сом/мес</p>
-                    </div>
-                  </div>
-                  <div class="card_btn">
-                    <button class="detailed">подробнее</button>
-                    <button class="signup">Записаться</button>
-                  </div>
-                </div>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-      
-          <!-- Арабский -->
-          <div id="arabic" class="data_info_content">
-            {% for course in courses_all %}
-              {% if course.direction == "arabic" %}
-                <!-- та же карточка -->
-                <div class="card {{ course.color_theme }}">
-                  <div class="card_img">
-                    <div>
-                      <p>{{ course.title }}</p>
-                      <h5>{{ course.direction }}</h5>
-                    </div>
-                    <img src="{{ course.photo.url }}" style="width: 135px; height: 135px;" alt="">
-                  </div>
-                  <ul class="card_list">
-                    {% for program in course.programs.all %}
-                      <li>{{ program.title }}</li>
-                    {% empty %}
-                      <li>Нет программ</li>
-                    {% endfor %}
-                  </ul>
-                  <div class="card_discount">
-                    <div class="card_discount_head">
-                      <div>
-                        <p class="card_discount_title line-through">{{ course.price }} сом</p>
-                        <p class="card_discount_title">{{ course.discounted_price }} сом</p>
-                      </div>
-                      <div class="card_price_minus">
-                        -{{ course.discount_percent }}%
-                      </div>
-                    </div>
-                    <div class="card_price">
-                      <h1 class="card_price_n">{{ course.monthly_price }}</h1>
-                      <p class="card_price_som">сом/мес</p>
-                    </div>
-                  </div>
-                  <div class="card_btn">
-                    <button class="detailed">подробнее</button>
-                    <button class="signup">Записаться</button>
-                  </div>
-                </div>
-                </div>
-              {% endif %}
-            {% endfor %}
-          </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endfor %}
         </div>
+  
       </div>
-      
     </div>
   </section>
+  
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const buttons = document.querySelectorAll('.data_btns button');
@@ -301,38 +170,143 @@
       });
     });
   </script>
-  
-  <div class="modal">
-    <div class="container">
-      <div class="modal_content">
-        <button>X</button>
-        <div class="modal_hero">
-          <div>
+  <style>
+    .modal_overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
 
-            <h3>Front-end разработчик кто это и чем занимается?</h3>
-            <p>Front-end разработчик – это специалист, который отвечает за создание пользовательского интерфейса (UI)
-              веб-сайтов и веб-приложений. Он делает так, чтобы сайт выглядел привлекательно, работал быстро и был
-              удобным
-              в
-              использовании.</p>
+  .modal_box {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 900px;
+    width: 100%;
+    animation: fadeIn 0.3s ease;
+    position: relative;
+  }
+
+  .modal_close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #555;
+    cursor: pointer;
+  }
+
+  .modal_hero {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .modal_text {
+    flex: 1;
+  }
+
+  .modal_img {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  </style>
+  {% for course in courses_all %}
+  <div class="modal" id="modal-{{ course.id }}" style="display: none;">
+    <div class="modal_overlay">
+      <div class="modal_box">
+        <button class="modal_close" data-close="{{ course.id }}">×</button>
+
+        <div class="modal_hero">
+          <div class="modal_text">
+            <div>{{ course.title_model|safe }}</div>
+            <div>{{ course.description_model|safe }}</div>
           </div>
-          <img src="./img/e404.png" alt="">
-        </div>
-        <div class="modal_info">
-          <h4>Основные технологии Front-end разработки</h4>
-          <p>HTML (HyperText Markup Language)
-            Основной язык разметки, который определяет структуру веб-страницы.Позволяет задавать заголовки, абзацы,
-            изображения, ссылки и другие элементы.</p>
-          <h4>CSS (Cascading Style Sheets)</h4>
-          <p>Отвечает за внешний вид сайта.Позволяет стилизовать элементы (цвета, шрифты, анимации, отступы и т.
-            д.).CSS-фреймворки: Bootstrap, Tailwind CSS.</p>
-          <h4>JavaScript (JS)</h4>
-          <p>Язык программирования, который делает сайт динамичным и интерактивным.Используется для создания анимаций,
-            слайдеров, форм, кнопок, модальных окон.JS-библиотеки и фреймворки: React, Vue.js, Angular.</p>
+          <img src="{{ course.photo.url }}" alt="{{ course.title }}" class="modal_img">
         </div>
       </div>
     </div>
   </div>
+  {% endfor %}
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Открытие модалки
+      document.querySelectorAll('.detailed').forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const modalId = this.getAttribute('href').replace('#', '');
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            modal.style.display = 'block';
+            document.body.style = ''; // Блокировка прокрутки
+          }
+        });
+      });
+
+      // Закрытие по кнопке X
+      document.querySelectorAll('.modal_close').forEach(button => {
+        button.addEventListener('click', function () {
+          const id = this.dataset.close;
+          const modal = document.getElementById(`modal-${id}`);
+          if (modal) {
+            modal.style.display = 'none';
+          }
+        });
+      });
+
+      // Закрытие по затемнению (клик по фону)
+      document.querySelectorAll('.modal_overlay').forEach(overlay => {
+        overlay.addEventListener('click', function (e) {
+          if (e.target === this) {
+            const modal = this.closest('.modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+          }
+        });
+      });
+
+      // (Опционально) Закрытие по клавише Esc
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
+          });
+          document.body.style.overflow = '';
+        }
+      });
+
+    });
+    document.querySelectorAll('.signup').forEach(button => {
+      button.addEventListener('click', function () {
+        const courseId = this.dataset.courseId;
+        document.getElementById('courseIdInput').value = courseId;
+        document.getElementById('modalSign').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    
+    // Закрытие
+    document.querySelector('.modalSign_close').addEventListener('click', () => {
+      document.getElementById('modalSign').style.display = 'none';
+      document.body.style.overflow = '';
+    });
+    
+  </script>
   <div id="modalSign">
     <div class="modalSign">
       <div class="container">
@@ -360,35 +334,40 @@
             </div>
           </div>
         </div>
-        <div class="modalSign_form">
-          <input type="text" placeholder="имя">
+        <form id="modalSignForm" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="course_id" id="courseIdInput">
+        
+          <input type="text" name="name_register" placeholder="Имя" required>
           <div>
-            <input type="text" placeholder="телефона">
-            <input type="text" placeholder="Электронная почта">
+            <input type="text" name="phone_register" placeholder="Телефон" required>
+            <input type="email" name="email_register" placeholder="Электронная почта">
           </div>
-          <button class="btn">Отправить</button>
-        </div>
+          <button type="submit" class="btn">Отправить</button>
+        </form>
+        
       </div>
     </div>
   </div>
+  
   <footer class="footer">
     <div class="footer-section-1">
-      <img src="img/logo.svg" alt="logo" class="logo-footer" />
+      <img src="{% static 'img/logo.svg' %}" alt="logo" class="logo-footer" />
       <div class="uls">
         <div class="site-sections ul-con">
           <h2>Разделы сайтов</h2>
           <ul>
-            <li><a href="#">Курсы</a></li>
-            <li><a href="#aboutUs">О нас</a></li>
-            <li><a href="#">Контакты</a></li>
+            <li><a href="{% url 'courses' %}">Курсы</a></li>
+            <li><a href="{% url 'about' %}">О нас</a></li>
+            <li><a href="{% url 'settings' %}">Контакты</a></li>
           </ul>
         </div>
         <div class="social-madia ul-con">
           <h2>Соц. сети</h2>
           <ul>
-           <li> <a href="https://www.instagram.com/americandream.osh/" target="_blank">Instagram</a></li>
-           <li>     <a href="https://www.youtube.com/@AmericanDreamOsh" target="_blank">Youtube</a></li>
-           <li>      <a href="https://www.tiktok.com/@american.dream4" target="_blank">Tik-tok</a></li>
+            <li> <a href="{{settings.linksinsta}}" target="_blank">Instagram</a></li>
+            <li> <a href="{{settings.linksyoutube}}" target="_blank">Youtube</a></li>
+            <li> <a href="{{settings.linkstiktok}}" target="_blank">Tik-tok</a></li>
           </ul>
         </div>
         <div class="contacts ul-con">

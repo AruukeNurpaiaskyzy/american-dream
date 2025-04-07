@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from apps.academy.models import  Settings, Contacts, Teacher, \
-AboutPage, AboutObjects, AboutObjects2, Courses, Feedback, CoursesModel, CoursesPage, CourseApplication
+AboutPage, AboutObjects, AboutObjects2, Courses, Feedback, CoursesModel, CoursesPage, CourseApplication, TypeCourse
 from django.core.mail import send_mail
 from django.conf import settings as st
 from django.views.generic import TemplateView
@@ -94,6 +94,7 @@ class AboutView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["about_id"] = AboutPage.objects.latest("id")
+        context["settings_obj"] = Settings.objects.latest("id")
         objs1 = list(AboutObjects.objects.all())
         objs2 = list(AboutObjects2.objects.all())
         combined = []
@@ -107,6 +108,14 @@ class AboutView(TemplateView):
         return context
 
 def courses(request):
-    courses = CoursesPage.objects.latest("id")
-    courses_all = Courses.objects.prefetch_related('programs', 'modals')
-    return render (request, 'courses.html', locals())  
+    courses_page = CoursesPage.objects.latest("id")
+    courses_all = Courses.objects.select_related('direction').prefetch_related('programs', 'modals')
+    directions = TypeCourse.objects.all()
+    settings_obj = Settings.objects.latest("id")
+    return render(request, 'courses.html', {
+        'courses_page': courses_page,
+        'courses_all': courses_all,
+        'directions': directions,
+        'settings': settings_obj,
+    })
+

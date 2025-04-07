@@ -45,6 +45,9 @@ class Settings(models.Model):
     feedback_description = RichTextField(
         verbose_name='Описание обратной связи '
     )
+    linksinsta=models.URLField(verbose_name='инста')
+    linksyoutube=models.URLField(verbose_name='ютуб')
+    linkstiktok=models.URLField(verbose_name='тикток')
 
     def __str__(self):
         return self.title_banner
@@ -152,6 +155,9 @@ class AboutObjects2(models.Model):
 
 class TypeCourse(models.Model):
     title = models.CharField(max_length=255, verbose_name='тип курсов')
+
+    def __str__(self):
+        return self.title
 
 
 class Courses(models.Model):
