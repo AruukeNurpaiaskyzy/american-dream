@@ -112,229 +112,426 @@
 
 
 
-  <section id="courses">
-    <div class="container">
-      <div class="courses_head">
-        <h2 class="title_h2">Популярные курсы</h2>
-        <div class="swiper-navigation">
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+<section id="courses">
+  <div class="container">
+    <div class="courses_head">
+      <h2 class="title_h2">Популярные курсы</h2>
+      <div class="swiper-navigation">
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
       </div>
-  
-      <div class="swiper courses-slider">
-        <div class="swiper-wrapper">
-          {% for course in courses %}
-          <div class="swiper-slide">
-            <div class="card" style="background-color: {{ course.color_theme }}">
-              <div class="card_img">
+    </div>
+
+    <div class="swiper courses-slider">
+      <div class="swiper-wrapper">
+        {% for course in courses %}
+        <div class="swiper-slide">
+          <div class="card" style="background-color: {{ course.color_theme }}">
+            <div class="card_img">
+              <div>
+                <p>{{ course.direction }}</p>
+                <h5>{{ course.title }}</h5>
+              </div>
+              <img src="{{ course.photo.url }}" style="width: 50px; height: 100px;" alt="{{ course.title }}">
+            </div>
+
+            <ul class="card_list">
+              {% for program in course.programs.all %}
+                <li>{{ program.title }}</li>
+              {% empty %}
+                <li>Нет программ</li>
+              {% endfor %}
+            </ul>
+
+            <div class="card_discount">
+              <div class="card_discount_head">
                 <div>
-                  <p>{{ course.direction }}</p>
-                  <h5>{{ course.title }}</h5>
+                  <p class="card_discount_title line-through">{{ course.price }} сом</p>
+                  <p class="card_discount_title">{{ course.discounted_price }} сом</p>
                 </div>
-                <img src="{{ course.photo.url }}" style="width: 50px; height: 100px;" alt="{{ course.title }}">
+                <div class="card_price_minus">{{ course.discount_percent }}%</div>
               </div>
-              <ul class="card_list">
-                {% for program in course.programs.all %}
-                  <li>{{ program.title }}</li>
-                {% empty %}
-                  <li>Нет программ</li>
-                {% endfor %}
-              </ul>
-  
-              <div class="card_discount">
-                <div class="card_discount_head">
-                  <div>
-                    <p class="card_discount_title line-through">{{ course.price }} сом</p>
-                    <p class="card_discount_title">{{ course.discounted_price }} сом</p>
+              <div class="card_price">
+                <h1 class="card_price_n">{{ course.monthly_price }}</h1>
+                <p class="card_price_som">сом/мес,</p>
+              </div>
+            </div>
+
+            <div class="card_btn">
+              <a href="#modal-{{ course.id }}" class="detailed modal-trigger">Подробнее</a>
+              <a href="#modal-sign-{{ course.id }}" class="signup modal-trigger">Записаться</a>
+            </div>
+            
+          </div>
+        </div>
+        <!-- Модалка "Подробнее" -->
+        <div class="modal" id="modal-{{ course.id }}" style="display: none;">
+          <div class="modal_overlay">
+            <div class="modal_box">
+              <button class="modal_close" data-close="modal-{{ course.id }}">×</button>
+              <div class="modal_hero">
+                <div class="modal_text">
+                  <h2 class="modal_title">{{ course.title }}</h2>
+                  <p class="modal_direction">{{ course.direction }}</p>
+                  <div class="modal_description">
+                    {{ course.title_model|safe }}
+                    {{ course.description_model|safe }}
                   </div>
-                  <div class="card_price_minus">{{ course.discount_percent }}%</div>
                 </div>
-  
-                <div class="card_price">
-                  <h1 class="card_price_n">{{ course.monthly_price }}</h1>
-                  <p class="card_price_som">сом/мес,</p>
-                </div>
-              </div>
-  
-              <div class="card_btn">
-                <a href="#modal-{{ course.id }}" class="detailed">Подробнее</a>
-                <button class="signup">Записаться</button>
+                <img src="{{ course.photo.url }}" alt="{{ course.title }}" class="modal_img">
               </div>
             </div>
           </div>
-          {% endfor %}
         </div>
+
+
+        <!-- МОДАЛКА: Записаться -->
+        <div class="modal" id="modal-sign-{{ course.id }}" style="display: none;">
+          <div class="modal_overlay">
+            <div class="modal_box">
+              <button class="modal_close" data-close="modal-sign-{{ course.id }}">×</button>
+              <div class="modal_hero">
+                <div class="modal_text" style="flex: 1;">
+                  <h3>Запись на курс: {{ course.title }}</h3>
+                  <form method="POST" action="/">
+                    {% csrf_token %}
+                    <input type="hidden" name="course_id" value="{{ course.id }}">
+                    <input type="text" name="name_register" placeholder="Ваше имя" required>
+                    <input type="tel" name="phone_register" placeholder="Телефон" required>
+                    <input type="email" name="email_register" placeholder="Email" required>
+                    <button type="submit" class="btn">Отправить</button>
+                  </form>
+                </div>
+                <img src="{{ course.photo.url }}" alt="{{ course.title }}" class="modal_img">
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
       </div>
-  
-      <a href="{% url 'courses' %}" class="btn courses_btn">Все курсы</a>
     </div>
-  </section>
-  <style>
-    .modal_overlay {
+
+    <a href="{% url 'courses' %}" class="btn courses_btn">Все курсы</a>
+  </div>
+</section>
+
+<!-- Модальное оформление -->
+<style>
+  .modal_overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100vw; height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    padding: 20px;
   }
-
   .modal_box {
     background: white;
-    border-radius: 12px;
+    border-radius: 20px;
     padding: 30px;
-    max-width: 900px;
+    max-width: 850px;
     width: 100%;
     animation: fadeIn 0.3s ease;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  .modal_hero {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .modal_img {
+    width: 160px;
+    height: 160px;
+    border-radius: 16px;
+    object-fit: cover;
+    align-self: center;
+  }
+  
+  .modal_text h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 8px;
+  }
+  
+  .modal_sub {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 12px;
+  }
+  
+  .modal_programs {
+    margin-bottom: 12px;
+    padding-left: 20px;
+    list-style-type: disc;
+    font-size: 15px;
+    color: #333;
+  }
+  
+  .modal_description {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.6;
+  }
+  
+  @media (min-width: 640px) {
+    .modal_hero {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  
+    .modal_img {
+      margin-left: 20px;
+    }
+  }
+  
+  .card_btn {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .modal_box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 800px;
+    width: 100%;
+    animation: fadeIn 0.25s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+  
+  .modal_title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #111;
+    margin-bottom: 10px;
+  }
+  
+  .modal_direction {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  .modal_description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  .modal_hero {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+  }
+  
+  .modal_img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 16px;
+    align-self: flex-start;
+  }
+  
+  @media (min-width: 640px) {
+    .modal_hero {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  
+    .modal_img {
+      margin-top: 8px;
+    }
+  }
+  
+  
+  .card_btn a {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s ease;
+  }
+  
+  .card_btn .detailed {
+    background-color: #0029FF; /* синий */
+  }
+  
+  .card_btn .detailed:hover {
+    background-color: #001bb5;
+  }
+  
+  .card_btn .signup {
+    background-color: #0066FF; /* ещё один оттенок синего */
+  }
+  
+  .card_btn .signup:hover {
+    background-color: #004ed6;
+  }
+  
+
+  .modal_box {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    animation: fadeIn 0.25s ease;
     position: relative;
   }
 
   .modal_close {
     position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
+    top: 12px;
+    right: 16px;
+    background: #eee;
     border: none;
-    font-size: 24px;
-    color: #555;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
     cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .modal_close:hover {
+    background: #ccc;
   }
 
   .modal_hero {
     display: flex;
+    flex-direction: column;
     gap: 20px;
-    flex-wrap: wrap;
   }
 
   .modal_text {
-    flex: 1;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
   }
 
   .modal_img {
-    width: 150px;
-    height: auto;
-    object-fit: contain;
+    max-width: 120px;
+    border-radius: 12px;
+    align-self: center;
+  }
+
+  .modal_box h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: #111;
+  }
+
+  .modalSign_form input {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  .modalSign_form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #A40A5E;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .modalSign_form button:hover {
+    background-color: #87084f;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
+    from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
   }
 
-  </style>
-  <!-- Модальные окна для каждого курса -->
-  {% for course in courses %}
-  <div class="modal" id="modal-{{ course.id }}" style="display: none;">
-    <div class="modal_overlay">
-      <div class="modal_box">
-        <button class="modal_close" data-close="{{ course.id }}">×</button>
+  @media (min-width: 640px) {
+    .modal_hero {
+      flex-direction: row;
+      align-items: center;
+    }
 
-        <div class="modal_hero">
-          <div class="modal_text">
-            <div>{{ course.title_model|safe }}</div>
-            <div>{{ course.description_model|safe }}</div>
-          </div>
-          <img src="{{ course.photo.url }}" alt="{{ course.title }}" class="modal_img">
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
+    .modal_img {
+      margin-left: 20px;
+    }
+  }
+</style>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // Открытие модалки
-      document.querySelectorAll('.detailed').forEach(link => {
-        link.addEventListener('click', function (e) {
-          e.preventDefault();
-          const modalId = this.getAttribute('href').replace('#', '');
-          const modal = document.getElementById(modalId);
-          if (modal) {
-            modal.style.display = 'block';
-            document.body.style = ''; // Блокировка прокрутки
-          }
-        });
+
+<!-- JS -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Открытие
+    document.querySelectorAll('.modal-trigger').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const modalId = this.getAttribute('href').replace('#', '');
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.style.display = 'block';
+          document.body.style.overflow = 'hidden';
+        }
       });
+    });
 
-      // Закрытие по кнопке X
-      document.querySelectorAll('.modal_close').forEach(button => {
-        button.addEventListener('click', function () {
-          const id = this.dataset.close;
-          const modal = document.getElementById(`modal-${id}`);
-          if (modal) {
-            modal.style.display = 'none';
-          }
-        });
-      });
-
-      // Закрытие по затемнению (клик по фону)
-      document.querySelectorAll('.modal_overlay').forEach(overlay => {
-        overlay.addEventListener('click', function (e) {
-          if (e.target === this) {
-            const modal = this.closest('.modal');
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-          }
-        });
-      });
-
-      // (Опционально) Закрытие по клавише Esc
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-          document.querySelectorAll('.modal').forEach(modal => {
-            modal.style.display = 'none';
-          });
+    // Закрытие по кнопке
+    document.querySelectorAll('.modal_close').forEach(button => {
+      button.addEventListener('click', function () {
+        const modalId = this.getAttribute('data-close');
+        const modal = document.getElementById(modalId);
+        if (modal) {
+          modal.style.display = 'none';
           document.body.style.overflow = '';
         }
       });
-
     });
-  </script>
 
+    // Закрытие по клику на затемнение
+    document.querySelectorAll('.modal_overlay').forEach(overlay => {
+      overlay.addEventListener('click', function (e) {
+        if (e.target === this) {
+          const modal = this.closest('.modal');
+          modal.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    });
 
-  <div id="modalSign">
-    <div class="modalSign">
-      <div class="container">
-        <button class="modalSign_close">X</button>
+    // Esc
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal').forEach(modal => {
+          modal.style.display = 'none';
+        });
+        document.body.style.overflow = '';
+      }
+    });
+  });
+</script>
 
-        <div class="card">
-          <div class="card_img">
-            <div>
-              <p>Профессия</p>
-              <h5>Beginner (A1-A2)</h5>
-            </div>
-            <img class="" src="./img/e404.png" alt="">
-          </div>
-          <div class="card_discount">
-            <div class="card_discount_head">
-              <div>
-                <p class="card_discount_title line-through">6000 сом</p>
-                <p class="card_discount_title">5600 сом</p>
-              </div>
-              <div class="card_price_minus">-5%</div>
-            </div>
-            <div class="card_price">
-              <h1 class="card_price_n">3,000</h1>
-              <p class="card_price_som">сом/мес</p>
-            </div>
-          </div>
-        </div>
-        <form class="modalSign_form" method="POST" action="/">
-          {% csrf_token %}
-          <input type="hidden" name="course_id" value="{{ course.id }}">
-          <input type="text" name="name_register" placeholder="имя" required>
-          <div>
-            <input type="tel" name="phone_register" placeholder="телефон" required>
-            <input type="email" name="email" placeholder="Электронная почта" required>
-          </div>
-          <button type="submit" class="btn">Отправить</button>
-        </form>
-      </div>
-    </div>
-  </div>
+  
 
 
   <section id="teachers">

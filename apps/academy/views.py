@@ -24,14 +24,15 @@ def settings(request):
         # course_id = request.POST.get('course_id')
 
         # === Если форма записи на курс ===
-        if name_register and phone_register:
-            print("Это заявка на курс")
-            print("Имя:", name_register)
-            # print("Курс ID:", course_id)
-            print("Тел:", phone_register)
+        if request.method == "POST":
+                name_register = request.POST.get('name_register')
+                phone_register = request.POST.get('phone_register')
+                email_register = request.POST.get('email_register')
+                course_id = request.POST.get('course_id')
 
+        if name_register and phone_register and course_id:
             try:
-                course = get_object_or_404(Courses)
+                course = get_object_or_404(Courses, id=course_id)
 
                 # Сохраняем в БД
                 CourseApplication.objects.create(
@@ -48,9 +49,8 @@ def settings(request):
                 requests.get(
                     f"https://api.callmebot.com/whatsapp.php?phone={whatsapp_number}&text={requests.utils.quote(message)}&apikey={api_key}"
                 )
-
             except Exception as e:
-                print(f"Ошибка при отправке WhatsApp или сохранении: {e}")
+                print(f"Ошибка: {e}")
 
         # === Иначе это форма обратной связи ===
         else:
